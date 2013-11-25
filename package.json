@@ -1,0 +1,26 @@
+{
+  "name": "JSAnno",
+  "version": "0.0.0",
+  "description": "",
+  "main": "jsanno.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "karma": "~0.10.5",
+    "nunit": "~0.2.1",
+    "karma-nunit": "~0.1.0"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nealxyc/JSAnno.git"
+  },
+  "author": "Neal Xiong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nealxyc/JSAnno/issues"
+  }
+}
