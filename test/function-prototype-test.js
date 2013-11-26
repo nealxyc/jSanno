@@ -23,11 +23,11 @@
 		// var tr = a.tracer();
 		var callCount = 0, applyCount = 0, bindCount = 0 ;
 
-		var func = function(){ return "func";};
-		var oldCall = Function.prototype.call ;
-		var oldApply = Function.prototype.apply ;
-		var oldBind = Function.prototype.bind ;
-		oldBind.apply = oldApply ;
+		
+		var originCall = Function.prototype.call ;
+		var originApply = Function.prototype.apply ;
+		var originBind = Function.prototype.bind ;
+		originBind.apply = originApply ;
 		Function.prototype.call = function(){
 			callCount ++ ;
 			var thisArg = arguments[0];
@@ -35,7 +35,7 @@
 			if (arguments.length > 1){
 				argList.shift();
 			}
-			return (oldApply.bind(this))(thisArg, argList);
+			return (originApply.bind(this))(thisArg, argList);
 		};
 
 		
@@ -45,35 +45,37 @@
 			switch(arguments.length){
 				case 0:
 				case 1:
-				return (oldApply.bind(this))(thisArg);
+				return (originApply.bind(this))(thisArg);
 				case 2:
 				default:
-				return (oldApply.bind(this))(thisArg, arguments[1]);
+				return (originApply.bind(this))(thisArg, arguments[1]);
 			}
 		};
 
 		Function.prototype.bind = function(){
 			bindCount++;
 			var thisArg = arguments[0];
-			return oldBind.apply(thisArg) ;
+			return originBind.apply(thisArg) ;
 		};
-
-		var ret = func();
-		var ret2 = func.apply(null);
-		var ret3 = func.call(null);
+		var myObj = {
+			func:function(){ return "func";}
+		}
+		var ret = myObj.func();
+		var ret2 = myObj.func.apply(null);
+		var ret3 = myObj.func.call(null);
 		// tr.verify(2);
 
 		//Reset functions
-		Function.prototype.call = oldCall ;
-		Function.prototype.apply = oldApply ;
-		Function.prototype.bind = oldBind ;
+		Function.prototype.call = originCall ;
+		Function.prototype.apply = originApply ;
+		Function.prototype.bind = originBind ;
 		
 		a.eq("func", ret, "func() should return 'func'");
 		a.eq("func", ret2, "func.call should return 'func'");
 		a.eq("func", ret3, "func.apply should return 'func'");
 		a.eq(1, callCount,  "Function.prototype.call should be called at least once");
 		a.eq(1, applyCount,  "Function.prototype.apply should be called at least once");
-		// a.eq(1, bindCount, "Function.prototype.bind should be called at least once");
+		a.eq(2, bindCount, "Each of apply and call all went to Function.prototype.bind.");
 		// a.t(callCount  + applyCount> 0, "callCount + applyCount should be at lease 1.");
 	
 	};
