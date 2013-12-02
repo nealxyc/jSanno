@@ -9,7 +9,11 @@
   "devDependencies": {
     "karma": "~0.10.5",
     "nunit": "~0.2.1",
-    "karma-nunit": "~0.1.0"
+    "karma-nunit": "~0.1.2",
+    "connect": "~2.11.2",
+    "grunt": "~0.4.2",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-karma": "~0.6.2"
   },
   "scripts": {
     "test": "karma start"

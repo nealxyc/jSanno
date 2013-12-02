@@ -1,1 +1,2 @@
-# JSAnno
+# jSanno
+> js annotation framework.
