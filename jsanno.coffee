@@ -51,8 +51,10 @@
 			class Handler
 				constructor: (actionName, actionFuncion)->
 					throw Error "Expecting Action name to be a string." if typeof actionName != "string"
-					@domain = (actionName.substring 0, actionName.lastIndexOf(".")).trim()
-					@actionName = actionName.replace(@domain, "").trim()
+					lastDot = actionName.lastIndexOf(".") 
+					@domain = actionName.substring(0, lastDot).trim()
+					@actionName = actionName.substring(lastDot + 1).replace(@domain, "").trim()
+					throw Error "Expecting Action name to have a length greater than 0." if !@actionName 
 					@actionFuncion = actionFuncion
 
 		jSanno

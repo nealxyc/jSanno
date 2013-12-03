@@ -69,4 +69,26 @@ test.jSannoClass = (a) ->
 	a.notNull jSanno.Parser
 	a.notNull jSanno.Annotation
 
-# test.test
+test.testHandlerContructor = (a) ->
+	a.exception ()->
+		handler = new jSanno.Handler "com.domain.", ()->
+	, "Expection exception from contructor" 
+
+	a.exception ()->
+		handler = new jSanno.Handler "", ()->
+				# console.log handler.domain
+	, "Expection exception from contructor because no action name" 
+
+	handler = new jSanno.Handler "a.b", ()->
+	a.eq "a", handler.domain
+	# console.log handler.actionName
+	# console.log handler.parameters
+	# console.log handler.domain
+
+	
+
+
+
+
+
+
