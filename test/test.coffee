@@ -18,8 +18,55 @@ test.testCompile = (a) ->
 	# console.log literals
 	# undefined
 
-	literals = jSanno.compile func
-	console.log literals
-	a.eq 2, literals.length 
-	a.eq "use strict", literals[0].expression.value
-	a.eq "aaaa", literals[1].expression.value
+	annotations = jSanno.compile func
+	# console.log literals
+	a.eq 2, annotations.length 
+	a.eq "use strict", annotations[0].statement
+	a.eq "aaaa", annotations[1].statement
+	
+	a.eq "use", annotations[0].action
+	a.eq ["strict"], annotations[0].parameters
+
+	a.eq "aaaa", annotations[1].action
+	a.eq [], annotations[1].parameters
+
+test.testAnnotationRecognition = (a) ->
+	func = () -> 
+		"doAction 1,2,3 ";
+		"domain.doAction2 a, b, c ";
+		"use strict"
+		x = if typeof x != undefined then "x" else "X"
+		console.log "func"
+		return "func"
+
+	annotations = jSanno.compile func
+	# console.log literals
+	a.eq 3, annotations.length 
+	
+	a.eq "doAction", annotations[0].action
+	a.eq ["1", "2", "3"], annotations[0].parameters
+
+	a.eq "domain.doAction2", annotations[1].action
+	a.eq ["a","b","c"], annotations[1].parameters
+
+	a.eq "use", annotations[2].action
+	a.eq ["strict"], annotations[2].parameters
+
+	func = () -> 
+		"use strict"
+		"doAction 1,2,3 ";
+		123;
+		"domain.doAction2 a, b, c ";
+		
+		x = if (typeof x != undefined)  then "x" else "X"
+		console.log "func"
+		return "func"
+	annotations = jSanno.compile func
+	# console.log literals
+	a.eq 2, annotations.length 
+
+test.jSannoClass = (a) ->
+	a.notNull jSanno.Parser
+	a.notNull jSanno.Annotation
+
+# test.test

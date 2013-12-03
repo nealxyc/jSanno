@@ -13,7 +13,10 @@
     "connect": "~2.11.2",
     "grunt": "~0.4.2",
     "grunt-contrib-coffee": "~0.7.0",
-    "grunt-karma": "~0.6.2"
+    "grunt-karma": "~0.6.2",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-watch": "~0.5.3"
   },
   "scripts": {
     "test": "karma start"
@@ -26,5 +29,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nealxyc/JSAnno/issues"
+  },
+  "dependencies": {
+    "esprima": "~1.0.4",
+    "interceptor.js": "~0.2.0"
   }
 }
